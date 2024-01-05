@@ -91,7 +91,7 @@ async def list(request:Request):
     # documents = collection.find({})
     # documents.next() ## 오류 여부 확인용
     # cast cursor to list
-    user_list = await collection_user.get_all()
+    # user_list = await collection_user.get_all()
 
     # for document in documents:
     #     # print("document : {}".format(document))
