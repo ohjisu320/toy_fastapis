@@ -8,6 +8,14 @@ router = APIRouter()
 
 templates = Jinja2Templates(directory="templates/")
 
-@router.get("/forms", response_class=HTMLResponse) # 펑션 호출 방식
+@router.get("/creat", response_class=HTMLResponse)
 async def forms(request:Request):
-    return templates.TemplateResponse(name="positionings/forms.html", context={'request':request})
+    return templates.TemplateResponse(name="quests/creat.html", context={'request':request})
+
+@router.get("/result", response_class=HTMLResponse)
+async def forms(request:Request):
+    return templates.TemplateResponse(name="quests/result.html", context={'request':request})
+
+@router.get("/test", response_class=HTMLResponse)
+async def forms(request:Request):
+    return templates.TemplateResponse(name="quests/test.html", context={'request':request})
