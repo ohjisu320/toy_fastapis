@@ -8,9 +8,9 @@ router = APIRouter()
 
 templates = Jinja2Templates(directory="templates/")
 
-@router.get("/creat", response_class=HTMLResponse)
+@router.get("/create", response_class=HTMLResponse)
 async def forms(request:Request):
-    return templates.TemplateResponse(name="quests/creat.html", context={'request':request})
+    return templates.TemplateResponse(name="quests/create.html", context={'request':request})
 
 @router.get("/result", response_class=HTMLResponse)
 async def forms(request:Request):

@@ -13,12 +13,14 @@ from routes.gadgets import router as event_router
 from routes.positionings import router as second_router
 from routes.users import router as users_router
 from routes.homes import router as home_router
+from routes.quests import router as quest_router
 from fastapi import Request
 from fastapi.templating import Jinja2Templates
 app.include_router(event_router, prefix="/gadget")
 app.include_router(second_router, prefix="/positioning")
 app.include_router(users_router, prefix="/users")
 app.include_router(home_router, prefix="/home")
+app.include_router(quest_router, prefix="/quest")
 
 
 
@@ -45,6 +47,3 @@ async def root(Request:Request):
     # return {"message": "jisu World"}
     return templates.TemplateResponse("main.html",{'request':Request})
 
-@app.get("/quest")
-async def quest_root(Request:Request):
-    return templates.TemplateResponse("quest_main.html",{'request':Request})
