@@ -36,15 +36,15 @@ app.add_middleware(
 )
 
 @app.get("/")
-async def root(Request:Request):
+async def root(request:Request):
     # return {"message": "jisu World"}
-    return templates.TemplateResponse("main.html",{'request':Request})
+    return templates.TemplateResponse("main.html",{'request':request})
 
 @app.post("/")
-async def root(Request:Request):
+async def root(request:Request):
     # return {"message": "jisu World"}
-    return templates.TemplateResponse("main.html",{'request':Request})
+    return templates.TemplateResponse("main.html",{'request':request})
 
 @app.get("/quest")
-async def quest_root(Request:Request):
-    return templates.TemplateResponse("quest_main.html",{'request':Request})
+async def quest_root(request:Request):
+    return templates.TemplateResponse("quest_main.html",{'request':request})
