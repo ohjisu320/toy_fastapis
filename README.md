@@ -20,7 +20,7 @@
 |html|[result.html](templates/quests/result.html)|결과|
 
 ### [컬렉션]
-#### server :  http://192.168.10.235:8000/ 
+#### server :  mongodb:미정 (지수 mongodb 접속 불가해 정민mongodb 사용)
 |num|컬렉션 이름|설명|
 |--|--|--|
 |1|quest_question|문제 정답 점수|
