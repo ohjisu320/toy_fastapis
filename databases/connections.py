@@ -14,3 +14,27 @@ class Settings(BaseSettings):
                           document_models=[User]) # collection 리스트
     class Config:
         env_file = ".env"
+
+class Database:
+    # model == db-collection
+    def __init__(self, model) -> None:
+        self.model = model
+        pass
+
+    # 전체 list
+    async def get_all(self) :
+        documents = await self.model.find_all().to_list() # find({})
+        pass
+        return documents
+    
+    # 상세 보기
+    async def get(self, id: PydanticObjectId) -> Any:
+        doc = await self.model.get(id) # find_one
+        if doc:
+            return doc
+        return False
+    
+    # 저장
+    async def save(self, document) -> None:
+        await document.create()
+        return None
