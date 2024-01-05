@@ -45,3 +45,6 @@ async def root(Request:Request):
     # return {"message": "jisu World"}
     return templates.TemplateResponse("main.html",{'request':Request})
 
+@app.get("/quest")
+async def quest_root(Request:Request):
+    return templates.TemplateResponse("quest_main.html",{'request':Request})
