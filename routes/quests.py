@@ -70,7 +70,53 @@ async def create(request:Request):
 
 @router.get("/result", response_class=HTMLResponse)
 async def result(request:Request):
-    return templates.TemplateResponse(name="quests/result.html", context={'request':request})
+  list_question =[
+  {
+    "질문": "세계에서 가장 큰 강은 어디일까요?",
+    "정답": "3",
+    "점수": 10
+  },
+  {
+    "질문": "다음 중 최초의 인공위성은 무엇일까요?",
+    "정답": "1",
+    "점수": 8
+  },
+  {
+    "질문": "태양계에서 가장 큰 행성은 무엇일까요?",
+    "정답": "3",
+    "점수": 9
+  },
+  {
+    "질문": "삼국지에서 유비, 관우, 장비가 소속한 나라는 어디일까요?",
+    "정답": "1",
+    "점수": 7
+  },
+  {
+    "질문": "다음 중 유럽에 위치한 나라는 어디일까요?",
+    "정답": "3",
+    "점수": 6
+  }
+]
+  list_user = [
+    {
+    "응시자": "오지수",
+    "응시자정답": [3,1,3,1,3],
+    "응시자점수": 100
+  },
+    {
+    "응시자": "서정민",
+    "응시자정답": [3,1,3,1,3],
+    "응시자점수": 100
+  },
+    {
+    "응시자": "김명준",
+    "응시자정답": [3,1,3,1,3],
+    "응시자점수": 100
+  }
+]
+  return templates.TemplateResponse(name="quests/result.html", context={'request':request,
+                                                                          'list_user' : list_user,
+                                                                          'list_question' : list_question})
 
 list_question =[
   {
@@ -163,9 +209,6 @@ async def test(request:Request):
 async def create(request:Request):
     return templates.TemplateResponse(name="quests/create.html", context={'request':request})
 
-@router.post("/result", response_class=HTMLResponse)
-async def result(request:Request):
-    return templates.TemplateResponse(name="quests/result.html", context={'request':request})
 
 @router.post("/test", response_class=HTMLResponse)
 async def test(request:Request):

@@ -3,17 +3,34 @@
 풀이 결과
 {% endblock %}
 {% block main_container %}
-<div>풀이 결과</div>
-<table>
+<h2>풀이 결과</h2>
+
+<table class="table table-bordered table-hover text-align-center">
     <tr>
-        <td></td>
-        <td></td>
+        <th rowspan="2">응시자</th>
+        <th colspan="4">응시자정답</th>
+        <th rowspan="2">점수</th>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
+        {% for i in range(4) %}
+        <th>{{ i+1 }}번</th>
+        {% endfor %}
+
     </tr>
+    {% for i in range(3) %}
+    <tr >
+        <td> {{list_user[i]["응시자"]}} </td>
+        <td> {{list_user[i]["응시자정답"][0]}} </td>
+        <td> {{list_user[i]["응시자정답"][1]}} </td>
+        <td> {{list_user[i]["응시자정답"][2]}} </td>
+        <td> {{list_user[i]["응시자정답"][3]}} </td>
+        <td> {{list_user[i]["응시자점수"]}} </td>
+    </tr>
+    {% endfor %}
 </table>
+
+
+{{list_question}}
 
 {% endblock %}
 

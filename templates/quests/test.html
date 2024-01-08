@@ -1,23 +1,44 @@
-{% extends "main_template.html"%}
+{% extends "main_template.html" %}
+
 {% block title %}
 문제 풀이
 {% endblock %}
+
 {% block main_container %}
+<div class="container rounded bg-light" style="background-color: #d4edda;">
+    <h5 class="mb-3">문제 풀이</h5>
 
-<div>문제 풀이</div>
-
-<form action="">
-    {{list_question}}
-    {{list_answer}}
-    <div class="mb-3 mt-3">
+    <div class="mb-3">
         <label for="name" class="form-label">응시자 이름:</label>
-        <input type="name" class="form-control" id="name" placeholder="응시자 이름" name="name">
+        <input type="text" class="form-control" id="name" placeholder="응시자 이름을 입력하세요" name="name">
     </div>
 
-    <button type="submit" class="btn btn-primary" formaction="/users/insert" formmethod="post">제출</button>
-</form>
+    {% for question in list_question %}
+        {# 현재 질문의 순번과 질문 내용을 출력 #}
+        <div>질문 {{ loop.index }}: {{ question['질문'] }}</div>
+        
+        {# 답변 선택을 위한 드롭다운 메뉴를 생성 #}
+        <div class="mb-3">
+            {# 각 답변 선택 드롭다운에 고유한 label을 연결 #}
+            <label for="answer{{ loop.index0 }}" class="form-label">답 (select one):</label>
+            
+            {# select 태그를 사용하여 드롭다운 메뉴를 생성 #}
+            <select class="form-select" id="sel{{ loop.index0 }}" name="answer{{ loop.index0 }}" >
+                {# 각 답변 옵션에 대해 list_answer에서 적절한 답안을 가져와서 표시 #}
+                <option value="Option1">{{ list_answer[loop.index0*4]["답안"] }}</option>
+                <option value="Option2">{{ list_answer[loop.index0*4+1]["답안"] }}</option>
+                <option value="Option3">{{ list_answer[loop.index0*4+2]["답안"] }}</option>
+                <option value="Option4">{{ list_answer[loop.index0*4+3]["답안"] }}</option>
+            </select>
+        </div>
+    {% endfor %}
+
+    <form action="/users/insert" method="post">
+        <button type="submit" class="btn btn-primary" formaction="/quest/result" formmethod="post">제출</button>
+    </form>
+</div>
 {% endblock %}
 
-
 {% block footer %}
+
 {% endblock %}
