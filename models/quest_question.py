@@ -8,9 +8,9 @@ class Question(Document):
     # name = None datatype을 알 수 없음.
     
     Quiz_list: Optional[str] = None # Optional은 넣어도 되고 안넣어도 된다고 지정해주는 기능.
-    Answer: Optional[EmailStr] = None
-    Score: Optional[str] = None
+    Answer: Optional[str] = None
+    Score: Optional[int] = None
 
     class Settings:
-        name = "Question"
+        name = "quest_question"
   

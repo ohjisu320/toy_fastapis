@@ -7,6 +7,7 @@
 {% block main_container %}
 <div class="container rounded bg-light" style="background-color: #d4edda;">
     <h5 class="mb-3">문제 풀이</h5>
+<<<<<<< HEAD
     <form action="/quest/result" method="post">
     <div class="mb-3">
         <label for="name" class="form-label">응시자 이름:</label>
@@ -35,6 +36,36 @@
 
     
         <button type="submit" class="btn btn-primary" formaction="/quest/result" formmethod="post">제출</button>
+=======
+    <form action="/users/insert" method="post">
+        <div class="mb-3">
+            <label for="name" class="form-label">응시자 이름:</label>
+            <input type="text" class="form-control" id="name" placeholder="응시자 이름을 입력하세요" name="name">
+        </div>
+
+        {% for question in list_question %}
+            {# 현재 질문의 순번과 질문 내용을 출력 #}
+            <div>질문 {{ loop.index }}: {{ question['Quiz_list'] }}</div>
+            
+            {# 답변 선택을 위한 드롭다운 메뉴를 생성 #}
+            <div class="mb-3">
+                {# 각 답변 선택 드롭다운에 고유한 label을 연결 #}
+                <label for="answer{{ loop.index0 }}" class="form-label">답 (select one):</label>
+                
+                {# select 태그를 사용하여 드롭다운 메뉴를 생성 #}
+                <select class="form-select" id="sel{{ loop.index0 }}" name="answer{{ loop.index0 }}" >
+                    {# 각 답변 옵션에 대해 list_answer에서 적절한 답안을 가져와서 표시 #}
+                    <option value="Option1">{{ list_answer[loop.index0*4]["Quiz_answer"] }}</option>
+                    <option value="Option2">{{ list_answer[loop.index0*4+1]["Quiz_answer"] }}</option>
+                    <option value="Option3">{{ list_answer[loop.index0*4+2]["Quiz_answer"] }}</option>
+                    <option value="Option4">{{ list_answer[loop.index0*4+3]["Quiz_answer"] }}</option>
+                </select>
+            </div>
+        {% endfor %}
+
+    
+    <button type="submit" class="btn btn-primary" formaction="/quest/result" formmethod="post">제출</button>
+>>>>>>> d6c91776e4bf2e663659fbc8a4491c55ff7bf095
     </form>
 </div>
 {% endblock %}

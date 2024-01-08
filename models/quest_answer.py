@@ -10,5 +10,5 @@ class Answer(Document):
     Quiz_answer: Optional[str] = None # Optional은 넣어도 되고 안넣어도 된다고 지정해주는 기능.
 
     class Settings:
-        name = "Answer"
+        name = "quest_answer"
   
