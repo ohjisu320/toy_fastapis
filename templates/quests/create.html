@@ -4,29 +4,6 @@
 {% endblock %}
 {% block main_container %}
 
-<div>문제 출제</div>
-<div>list_question</div>
-{{list_question}}
-<div>list_answer</div>
-{{list_answer}}
-<div></div>
-
-<div>문제1 : {{list_question[0]['질문']}} / 점수 : {{list_question[0]['점수']}}</div>
-<div>답안 : 1) {{list_answer[0]['답안']}} / 2) {{list_answer[1]['답안']}} / 3) {{list_answer[2]['답안']}} / 4) {{list_answer[3]['답안']}}<br><br></div>
-
-<div>문제2 : {{list_question[1]['질문']}} / 점수 : {{list_question[1]['점수']}}</div>
-<div>답안 : 1) {{list_answer[4]['답안']}} / 2) {{list_answer[5]['답안']}} / 3) {{list_answer[6]['답안']}} / 4) {{list_answer[7]['답안']}}<br><br></div>
-
-<div>문제3 : {{list_question[2]['질문']}} / 점수 : {{list_question[2]['점수']}}</div>
-<div>답안 : 1) {{list_answer[8]['답안']}} / 2) {{list_answer[9]['답안']}} / 3) {{list_answer[10]['답안']}} / 4) {{list_answer[11]['답안']}}<br><br></div>
-
-<div>문제4 : {{list_question[3]['질문']}} / 점수 : {{list_question[3]['점수']}}</div>
-<div>답안 : 1) {{list_answer[12]['답안']}} / 2) {{list_answer[13]['답안']}} / 3) {{list_answer[14]['답안']}} / 4) {{list_answer[15]['답안']}}<br><br></div>
-
-<div>문제5 : {{list_question[4]['질문']}} / 점수 : {{list_question[4]['점수']}}</div>
-<div>답안 : 1) {{list_answer[16]['답안']}} / 2) {{list_answer[17]['답안']}} / 3) {{list_answer[18]['답안']}} / 4) {{list_answer[19]['답안']}}<br><br></div>
-
-
 <div>문제1 : {{list_question[0]['질문']}} / 점수 : {{list_question[0]['점수']}}</div>
 <ul>
   <li>답안 1) {{list_answer[0]['답안']}}</li>
@@ -67,7 +44,6 @@
   <li>답안 4) {{list_answer[19]['답안']}}</li>
 </ul>
 
-<div>{{list_question[0]}}</div>
 {% endblock %}
 
 
