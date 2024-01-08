@@ -2,15 +2,22 @@ from fastapi import APIRouter
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
-
-
+from databases.connections import Database
+from models.quest_question import Question
+from models.quest_answer import Answer
 router = APIRouter()
 
 templates = Jinja2Templates(directory="templates/")
-
+collection_question = Database(Question)
+collection_answer = Database(Answer)
 @router.get("/create", response_class=HTMLResponse)
 async def create(request:Request):
-    return templates.TemplateResponse(name="quests/create.html", context={'request':request})
+    list_question = await collection_question.get_all()
+    list_answer = await collection_answer.get_all()
+    return templates.TemplateResponse(name="quests/create.html", context={'request':request,
+                                                                          'list_question' : list_question,
+                                                                          'list_answer' : list_answer
+                                                                          })
 
 @router.get("/result", response_class=HTMLResponse)
 async def result(request:Request):
