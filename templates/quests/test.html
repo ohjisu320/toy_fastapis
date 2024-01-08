@@ -20,10 +20,10 @@
         {# 답변 선택을 위한 드롭다운 메뉴를 생성 #}
         <div class="mb-3">
             {# 각 답변 선택 드롭다운에 고유한 label을 연결 #}
-            <label for="answer{{ loop.index0 }}" class="form-label">답 (select one):</label>
+            <label for="answer{{ loop.index }}" class="form-label">답 (select one):</label>
             
             {# select 태그를 사용하여 드롭다운 메뉴를 생성 #}
-            <select class="form-select" id="sel{{ loop.index0 }}" name="answer{{ loop.index0 }}" >
+            <select class="form-select" id="sel{{ loop.index }}" name="answer{{ loop.index }}" >
                 {# 각 답변 옵션에 대해 list_answer에서 적절한 답안을 가져와서 표시 #}
                 <option value="1">{{ list_answer[loop.index0*4]["Quiz_answer"] }}</option>
                 <option value="2">{{ list_answer[loop.index0*4+1]["Quiz_answer"] }}</option>

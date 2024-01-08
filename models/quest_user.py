@@ -8,8 +8,11 @@ class Quest_user(Document):
     # name = None datatype을 알 수 없음.
     
     User_name: Optional[str] = None # Optional은 넣어도 되고 안넣어도 된다고 지정해주는 기능.
-    User_answer: Optional[str] = None
-
+    answer1: Optional[str] = None
+    answer2: Optional[str] = None
+    answer3: Optional[str] = None
+    answer4: Optional[str] = None
+    answer5: Optional[str] = None
 
     class Settings:
         name = "quest_user"

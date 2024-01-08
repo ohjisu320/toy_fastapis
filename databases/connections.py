@@ -1,9 +1,8 @@
-from typing import Any, List, Optional
+from typing import Any, Optional
 from beanie import init_beanie, PydanticObjectId
-from models.users import User
 from models.quest_answer import Answer
 from models.quest_question import Question
-
+from models.quest_user import Quest_user
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic_settings import BaseSettings
 
@@ -13,7 +12,7 @@ class Settings(BaseSettings):
     async def initialize_database(self,):
         client = AsyncIOMotorClient(self.DATABASE_URL)
         await init_beanie(database=client.get_default_database(),
-                          document_models=[User, Question, Answer])
+                          document_models=[Quest_user, Question, Answer])
 
     class Config:
         env_file = ".env"
