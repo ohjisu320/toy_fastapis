@@ -1,215 +1,81 @@
-from fastapi import APIRouter
+from fastapi import FastAPI, Request, APIRouter
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from fastapi import Request
-from databases.connections import Database
-from models.quest_question import Question
-from models.quest_answer import Answer
+from motor.motor_asyncio import AsyncIOMotorClient
+from pydantic_settings import BaseSettings
+from fastapi.responses import RedirectResponse
+
+# 환경 변수 로드를 위한 Settings 클래스 정의
+class Settings(BaseSettings):
+    database_url: str  # MongoDB의 전체 URL을 기대합니다.
+
+    class Config:
+        env_file = ".env"
+
+# 설정 로드
+settings = Settings()
+
+# FastAPI 앱과 라우터 초기화
+app = FastAPI()
 router = APIRouter()
 
-templates = Jinja2Templates(directory="templates/")
-collection_question = Database(Question)
-collection_answer = Database(Answer)
-@router.get("/create", response_class=HTMLResponse)
-async def create(request:Request):
-  list_question =[
-  {
-    "질문": "세계에서 가장 큰 강은 어디일까요?",
-    "정답": "3",
-    "점수": 10
-  },
-  {
-    "질문": "다음 중 최초의 인공위성은 무엇일까요?",
-    "정답": "1",
-    "점수": 8
-  },
-  {
-    "질문": "태양계에서 가장 큰 행성은 무엇일까요?",
-    "정답": "3",
-    "점수": 9
-  },
-  {
-    "질문": "삼국지에서 유비, 관우, 장비가 소속한 나라는 어디일까요?",
-    "정답": "1",
-    "점수": 7
-  },
-  {
-    "질문": "다음 중 유럽에 위치한 나라는 어디일까요?",
-    "정답": "3",
-    "점수": 6
-  }
-]
-  list_answer = [
-    {"답안": "아마존 강"},
-    {"답안": "단데 강"},
-    {"답안": "나일 강"},
-    {"답안": "미시시피 강"},
-    {"답안": "스푸트니크 1호"},
-    {"답안": "아리랑 1호"},
-    {"답안": "텔레스타 1호"},
-    {"답안": "광명성 1호"},
-    {"답안": "지구"},
-    {"답안": "토성"},
-    {"답안": "목성"},
-    {"답안": "화성"},
-    {"답안": "위나라"},
-    {"답안": "우나라"},
-    {"답안": "신라"},
-    {"답안": "촉나라"},
-    {"답안": "아르헨티나"},
-    {"답안": "중국"},
-    {"답안": "독일"},
-    {"답안": "나이지리아"}
-]
-    # list_question = await collection_question.get_all()
-    # list_answer = await collection_answer.get_all()
-  return templates.TemplateResponse(name="quests/create.html", context={'request':request,
-                                                                          'list_question' : list_question,
-                                                                          'list_answer' : list_answer
-                                                                          })
+# Motor 클라이언트 및 데이터베이스 설정
+client = AsyncIOMotorClient(settings.database_url)
+db = client.get_default_database()
 
-@router.get("/result", response_class=HTMLResponse)
-async def result(request:Request):
-  list_question =[
-  {
-    "질문": "세계에서 가장 큰 강은 어디일까요?",
-    "정답": "3",
-    "점수": 10
-  },
-  {
-    "질문": "다음 중 최초의 인공위성은 무엇일까요?",
-    "정답": "1",
-    "점수": 8
-  },
-  {
-    "질문": "태양계에서 가장 큰 행성은 무엇일까요?",
-    "정답": "3",
-    "점수": 9
-  },
-  {
-    "질문": "삼국지에서 유비, 관우, 장비가 소속한 나라는 어디일까요?",
-    "정답": "1",
-    "점수": 7
-  },
-  {
-    "질문": "다음 중 유럽에 위치한 나라는 어디일까요?",
-    "정답": "3",
-    "점수": 6
-  }
-]
-  list_user = [
-    {
-    "응시자": "오지수",
-    "응시자정답": [3,1,3,1,3],
-    "응시자점수": 100
-  },
-    {
-    "응시자": "서정민",
-    "응시자정답": [3,1,3,1,3],
-    "응시자점수": 100
-  },
-    {
-    "응시자": "김명준",
-    "응시자정답": [3,1,3,1,3],
-    "응시자점수": 100
-  }
-]
-  return templates.TemplateResponse(name="quests/result.html", context={'request':request,
-                                                                          'list_user' : list_user,
-                                                                          'list_question' : list_question})
+# Jinja2 템플릿 설정
+templates = Jinja2Templates(directory="templates")
 
-list_question =[
-  {
-    "질문": "세계에서 가장 큰 강은 어디일까요?",
-    "정답": "3",
-    "점수": 10
-  },
-  {
-    "질문": "다음 중 최초의 인공위성은 무엇일까요?",
-    "정답": "1",
-    "점수": 8
-  },
-  {
-    "질문": "태양계에서 가장 큰 행성은 무엇일까요?",
-    "정답": "3",
-    "점수": 9
-  },
-  {
-    "질문": "삼국지에서 유비, 관우, 장비가 소속한 나라는 어디일까요?",
-    "정답": "1",
-    "점수": 7
-  },
-  {
-    "질문": "다음 중 유럽에 위치한 나라는 어디일까요?",
-    "정답": "3",
-    "점수": 6
-  }
-]
+# MongoDB 컬렉션 설정
+question_collection = db['quest_question']
+answer_collection = db['quest_answer']
+user_collection = db['quest_user']
 
+# 데이터베이스 헬퍼 클래스
+class Database:
+    def __init__(self, collection):
+        self.collection = collection
 
-@router.get("/test", response_class=HTMLResponse, )
-async def test(request:Request):
-    list_question =[
-  {
-    "질문": "세계에서 가장 큰 강은 어디일까요?",
-    "정답": "3",
-    "점수": 10
-  },
-  {
-    "질문": "다음 중 최초의 인공위성은 무엇일까요?",
-    "정답": "1",
-    "점수": 8
-  },
-  {
-    "질문": "태양계에서 가장 큰 행성은 무엇일까요?",
-    "정답": "3",
-    "점수": 9
-  },
-  {
-    "질문": "삼국지에서 유비, 관우, 장비가 소속한 나라는 어디일까요?",
-    "정답": "1",
-    "점수": 7
-  },
-  {
-    "질문": "다음 중 유럽에 위치한 나라는 어디일까요?",
-    "정답": "3",
-    "점수": 6
-  }
-]
-    list_answer = [
-    {"답안": "아마존 강"},
-    {"답안": "단데 강"},
-    {"답안": "나일 강"},
-    {"답안": "미시시피 강"},
-    {"답안": "스푸트니크 1호"},
-    {"답안": "아리랑 1호"},
-    {"답안": "텔레스타 1호"},
-    {"답안": "광명성 1호"},
-    {"답안": "지구"},
-    {"답안": "토성"},
-    {"답안": "목성"},
-    {"답안": "화성"},
-    {"답안": "위나라"},
-    {"답안": "우나라"},
-    {"답안": "신라"},
-    {"답안": "촉나라"},
-    {"답안": "아르헨티나"},
-    {"답안": "중국"},
-    {"답안": "독일"},
-    {"답안": "나이지리아"}
-]
+    async def get_all(self):
+        return await self.collection.find().to_list(None)
+        
+    # 저장
+    async def save(self, document) -> None:
+        await document.create()
+        return None
+
+# 퀴즈 경로
+@router.get("/test", response_class=HTMLResponse)
+async def get_quiz(request: Request):
+    db = Database(question_collection)
+    quiz_list = await db.get_all()
+    db = Database(answer_collection)
+    quiz_answer = await db.get_all()
+    return templates.TemplateResponse("/quests/test.html", 
+        {"request": request,
+        "Quiz_list": quiz_list,
+        "Quiz_answer": quiz_answer
+    })
+
+@router.post("/result")
+async def submit_quiz(request: Request):
+    form_data = await request.form()
+    db = Database(user_collection)
+    db.save(**form_data)
+    # # 응시자 이름
+    # name = form_data.get('name')
     
+    # # 응시자 답변을 리스트로 만들기
+    # answers = [form_data.get(f'answer{i}') for i in range(4)]
+    
+    # data = {'응시자': name, '응시자정답': answers, '응시자점수': 0}  # 점수는 임시로 0으로 설정
+    await db.insert(data)
+    return templates.TemplateResponse("/quests/test.html", {"request": request,"Quiz_list": quiz_list,"Quiz_answer": quiz_answer
+    })
+# 라우터 등록
+app.include_router(router, prefix='/quest')
 
-    return templates.TemplateResponse(name="quests/test.html", context={'request':request,
-                                                                        'list_question': list_question,
-                                                                        'list_answer':list_answer})
-
-
-@router.post("/create", response_class=HTMLResponse)
-async def create(request:Request):
-    return templates.TemplateResponse(name="quests/create.html", context={'request':request})
-
-
-@router.post("/test", response_class=HTMLResponse)
-async def test(request:Request):
-    return templates.TemplateResponse(name="quests/test.html", context={'request':request})
+# 애플리케이션 실행
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
