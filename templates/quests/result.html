@@ -3,9 +3,9 @@
 풀이 결과
 {% endblock %}
 {% block main_container %}
-<div>풀이 결과</div>
+<h2>풀이 결과</h2>
 
-<table >
+<table class="table table-bordered table-hover text-align-center">
     <tr>
         <th rowspan="2">응시자</th>
         <th colspan="4">응시자정답</th>
@@ -18,7 +18,7 @@
 
     </tr>
     {% for i in range(3) %}
-    <tr>
+    <tr >
         <td> {{list_user[i]["응시자"]}} </td>
         <td> {{list_user[i]["응시자정답"][0]}} </td>
         <td> {{list_user[i]["응시자정답"][1]}} </td>
