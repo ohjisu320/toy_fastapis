@@ -4,11 +4,17 @@
 {% endblock %}
 {% block main_container %}
 
-<div>문제 풀이</div>
+<div>문제 출제</div>
+<div>list_question</div>
 {{list_question}}
+<div>list_answer</div>
 {{list_answer}}
 
+<div>문제1 : {{list_question[0]['질문']}} / 점수 : {{list_question[0]['점수']}}</div>
 
+<div>답안 : {{list_answer[0]['답안']}}</div>
+
+<div>{{list_question[0]}}</div>
 {% endblock %}
 
 
