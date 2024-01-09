@@ -8,10 +8,10 @@
 <div class="container rounded bg-light" style="background-color: #d4edda;">
     <h5 class="mb-3">문제 풀이</h5>
     <form action="/quest/result" method="post">
-    <div class="mb-3">
-        <label for="name" class="form-label">응시자 이름:</label>
-        <input type="text" class="form-control" id="name" placeholder="응시자 이름을 입력하세요" name="name">
-    </div>
+        <div class="mb-3">
+            <label for="User_name" class="form-label">응시자 이름:</label>
+            <input type="text" class="form-control" id="name" placeholder="응시자 이름을 입력하세요" name="User_name">
+        </div>
     
     {% for question in list_question%}
         {# 현재 질문의 순번과 질문 내용을 출력 #}

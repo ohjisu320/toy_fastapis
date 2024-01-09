@@ -14,5 +14,5 @@ class User(Document):
     text : Optional[str] = None
   
     class Settings:
-        name = "users"
+        name = "Quest_user"
   

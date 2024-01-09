@@ -25,6 +25,7 @@ async def test(request:Request):
 @router.post("/result")
 async def submit_quiz(request: Request):
     user_dict = dict(await request.form())
+    print(user_dict)  # 'User_name' 필드가 제대로 설정되었는지 확인
     user = Quest_user(**user_dict)
     await collection_user.save(user)
     list_user = await collection_user.get_all()
